@@ -1,0 +1,11 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.0
+pydantic==2.7.0
+numpy>=1.26.4
+pandas>=2.2.0
+python-multipart==0.0.9
+psutil==5.9.8
+scapy==2.5.0
+requests==2.31.0
+cicflowmeter==0.1.6
+

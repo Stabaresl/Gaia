@@ -1,0 +1,2 @@
+{"__type":"$$EventMessageAudit","id":"7b0551c5-41c0-4754-a016-504b75429396","ts":"2026-04-14T16:52:49.828+00:00","eventName":"n8n.audit.workflow.updated","message":"n8n.audit.workflow.updated","payload":{"userId":"e6a4729a-1883-4ff9-a4c0-5559246b67be","_email":"santitabares312@gmail.com","_firstName":"santiago","_lastName":"tabares","globalRole":"global:owner","workflowId":"o5wEpoj2nZKKR3Tt","workflowName":"DataSet"}}
+{"__type":"$$EventMessageConfirm","confirm":"7b0551c5-41c0-4754-a016-504b75429396","ts":"2026-04-14T16:52:49.828+00:00","source":{"id":"0","name":"eventBus"}}

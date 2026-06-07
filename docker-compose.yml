@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n_orchestrator
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=admin123
+    volumes:
+      - ./n8n_data:/home/node/.n8n
+    restart: unless-stopped
+    networks:
+      - capture_net
+
+  tcpdump-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tcpdump_capture
+    # privileged: true ya le da acceso total, pero también
+    # lo reforzamos con cap_add explícito para claridad
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    security_opt:
+      - apparmor:unconfined   # ← CORREGIDO: antes era seccomp:unconfined (mal valor)
+      - seccomp:unconfined
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./captures:/app/captures:rw
+      - ./csv_output:/app/csv_output:rw    # CSVs visibles en tu máquina
+      - ./urls.txt:/app/urls.txt:ro
+    restart: unless-stopped
+    networks:
+      - capture_net
+    environment:
+      - CAPTURE_INTERFACE=eth0
+      - SNAPLEN=65535
+      - LOG_LEVEL=INFO
+    ulimits:
+      memlock: -1
+
+networks:
+  capture_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
